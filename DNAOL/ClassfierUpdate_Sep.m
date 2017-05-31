@@ -24,9 +24,21 @@ end
 function [ infnorm ] = MatInf( X )
 
 % compute max(max(|X|))
-%   此处显示详细说明
+
 
 infnorm=max(max(abs(X)));
 end
 
+%--------------------------------------------------------------------------
 
+function [Yn] = matrixNormalize(Y,r,mode)
+colnorm=sqrt(sum(Y.^2,1));
+Colmat=repmat(colnorm,[size(Y,1),1]);
+if mode==1
+    [~,label]=find(colnorm>r);
+    Yn=Y;
+    Yn(:,label)=Y(:,label)./Colmat(:,label);
+else
+  Yn=Y./Colmat;
+end
+end
